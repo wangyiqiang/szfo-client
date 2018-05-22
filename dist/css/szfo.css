@@ -13,3 +13,7 @@
 .info-attachment li{
   margin-top:5px;
 }
+
+.info-detail-bottom {
+  float:right;
+}

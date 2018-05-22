@@ -206,6 +206,27 @@
                         <!-- /.panel-body -->
                     </div>
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="infoModalLabel">Modal title</h4>
+                            </div>
+                            <div class="modal-body">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">确定</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
         </div>
         <!-- /#page-wrapper -->
@@ -272,6 +293,19 @@
                             <div class="info-detail-cell"><label>举报对象</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
                             <div class="info-detail-cell"><label>案件描述：</label><p>${data.desc}</p></div>
                             <div class="info-detail-cell"><label>附件：</label>${attEl}</div>`;
+                if(data.status){
+                    // 待审核状态 显示审核按钮
+                    if(data.status === "01") {
+                        content += "<div class='info-detail-bottom button-right'>"+
+                        "<button type='button' class='btn btn-primary'>举报信息核实通过,转确认</button> "+
+                        "<button type='button' class='btn btn-danger'>举报信息核实不通过</button></div>";
+                    }else if(data.status === "02") {// 待确认状态 显示确认按钮
+                        content += "<div class='info-detail-bottom button-right'>"+
+                        "<button type='button' class='btn btn-primary' onclick='confirmInfo()'>确认流转</button> "+
+                        //"<button type='button' class='btn btn-warning'>驳回</button> "+
+                        "<button type='button' class='btn btn-danger'>不通过</button></div>";
+                    }
+                }
                 $('#info-detail div.panel-body').html(content);
                 $('#info-detail').show();
                 $('#table-panel-wrapper').hide();
@@ -305,6 +339,21 @@
                
                 return "<ol>"+picList + attachList+"</ol>";
             }
+        }
+
+        /**
+        *  确认流转功能
+        **/
+        function confirmInfo(){
+            $("#infoModal h4.modal-title").html("确认流转信息");
+            var bodyContent = '<div class="form-group">'+
+                                    '<label>流转接口人</label>'+
+                                    '<input class="form-control">'+
+                                    '<label>流转意见及说明</label>'+
+                                    '<textarea class="form-control" rows="5"></textarea>'+
+                                '</div>';
+            $("#infoModal div.modal-body").html(bodyContent);
+            $("#infoModal").modal();
         }
     </script>
 </body>
