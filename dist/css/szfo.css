@@ -1,0 +1,15 @@
+.info-detail-cell{
+  padding-top: 5px;
+}
+
+.info-attachment{
+  display:inline-block; 
+  margin:3px; 
+  padding:2px; 
+  border:1px solid #bce8f1;
+  border-radius:5px;
+}
+
+.info-attachment li{
+  margin-top:5px;
+}

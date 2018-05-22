@@ -1,0 +1,22 @@
+{"data":[
+  {"id":232431,"type":"诈骗","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"刘某","date":"2018-05-17"},
+  {"id":232432,"type":"诈骗1","jbdx":"x1公司","addr":"xxx区xx路23号","informer":"张某","date":"2018-05-18"},
+  {"id":232433,"type":"诈骗2","jbdx":"x2公司","addr":"xxx区xx路23号","informer":"王某","date":"2018-05-17"},
+  {"id":232434,"type":"诈骗3","jbdx":"x3公司","addr":"xxx区xx路23号","informer":"赵某","date":"2018-05-17"},
+  {"id":232435,"type":"诈骗4","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"李某","date":"2018-05-17"},
+  {"id":232436,"type":"诈骗","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"王某","date":"2018-05-16"},
+  {"id":232437,"type":"诈骗","jbdx":"x5公司","addr":"xxx区xx路23号","informer":"孙某","date":"2018-05-17"},
+  {"id":232438,"type":"诈骗","jbdx":"x6公司","addr":"xxx区xx路23号","informer":"钱某","date":"2018-05-17"},
+  {"id":232439,"type":"诈骗2","jbdx":"x7公司","addr":"xxx区xx路23号","informer":"范某","date":"2018-05-17"},
+  {"id":2324310,"type":"诈骗3","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"习某","date":"2018-05-17"},
+  {"id":2324311,"type":"诈骗","jbdx":"x8公司","addr":"xxx区xx路23号","informer":"郑某","date":"2018-05-17"},
+  {"id":2324312,"type":"诈骗","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"金某","date":"2018-05-17"},
+  {"id":2324313,"type":"诈骗1","jbdx":"x9公司","addr":"xxx区xx路23号","informer":"朱某","date":"2018-05-20"},
+  {"id":2324314,"type":"诈骗","jbdx":"110公司","addr":"xxx区xx路23号","informer":"陈某","date":"2018-05-20"},
+  {"id":2324315,"type":"诈骗4","jbdx":"x22公司","addr":"xxx区xx路23号","informer":"谢某","date":"2018-05-17"},
+  {"id":2324316,"type":"诈骗","jbdx":"x33公司","addr":"xxx区xx路23号","informer":"夏某","date":"2018-05-17"},
+  {"id":2324317,"type":"诈骗","jbdx":"xx45公司","addr":"xxx区xx路23号","informer":"刘某","date":"2018-04-17"},
+  {"id":2324318,"type":"诈骗4","jbdx":"x78x公司","addr":"xxx区xx路23号","informer":"刘某","date":"2018-03-17"},
+  {"id":2324319,"type":"诈骗","jbdx":"x90x公司","addr":"xxx区xx路23号","informer":"刘某","date":"2018-02-17"},
+  {"id":2324320,"type":"诈骗1","jbdx":"xx公司","addr":"xxx区xx路23号","informer":"刘某","date":"2018-01-17"}
+]}
