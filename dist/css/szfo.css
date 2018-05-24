@@ -15,5 +15,24 @@
 }
 
 .info-detail-bottom {
+  margin:5px;
+  padding:3px;
   float:right;
+}
+span.bubble{
+  position:absolute;
+  top:8px;
+  right:8px;
+  padding:2px;
+  min-width:25px;
+  text-align:center;
+  background:red;
+  border-radius:50%;
+  color:#fff;
+}
+
+.splliter{
+  width: 100%;
+  padding-top:5px;
+  border-bottom:2px solid cadetblue;
 }

@@ -107,10 +107,10 @@
                                     <a href="#">举报查询</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">审核/确认</a>
+                                    <a href="confirm.html">审核/确认</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">流转反馈</a>
+                                    <a href="feedback.html">流转反馈</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -221,6 +221,8 @@
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
 
     <!-- render table -->
     <script>
@@ -266,46 +268,10 @@
          */
         function showDetail(id){
             $.getJSON('/data/info-detail.json',{"id":id},function(data){
-                var attachments = data.attachments;
-                var attEl = genAttachEl(attachments);
-                var content = `<div class="info-detail-cell"><label>编号：</label> ${data.id}</div>
-                            <div class="info-detail-cell"><label>举报人：</label>${data.informer} <label>举报时间：</label>${data.date} <label>电话：${data.phone}</label></div>
-                            <div class="info-detail-cell"><label>举报对象</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
-                            <div class="info-detail-cell"><label>案件描述：</label><p>${data.desc}</p></div>
-                            <div class="info-detail-cell"><label>附件：</label>${attEl}</div>`;
-                $('#info-detail div.panel-body').html(content);
+                $('#info-detail div.panel-body').html(genDetailInfoEL(data));
                 $('#info-detail').show();
                 $('#table-panel-wrapper').hide();
             });
-        }
-
-        /**
-         * 生成详情区块附件及图片内容区块HTML
-         * 
-         * */
-        function genAttachEl(attachments){
-            if(attachments){
-                var attachList = "";
-                var picList = "";
-                attachments.forEach(url => {
-                    var point = url.lastIndexOf("."); 
-                    var type = url.substr(point).toLowerCase(); 
-                    if(type===".jpg"||type==".gif"||type===".jpeg"||type===".bmp"||type===".npg"){ 
-                        picList += "<div class='info-attachment'><a target='_blank' href='"+url+"'><img width=200 height=200 src='"+url+"'></a></div>";
-                    }else{
-                        point = url.lastIndexOf("/");
-                        var fName = "";
-                        if(point>0) {
-                            fName = url.substr(point+1);
-                        }else{
-                            fName = url;
-                        }
-                        attachList += "<li><a target='_blank' href="+url+">附件("+fName+")</a></li>";
-                    }
-                });
-               
-                return "<ol>"+picList + attachList+"</ol>";
-            }
         }
     </script>
 </body>

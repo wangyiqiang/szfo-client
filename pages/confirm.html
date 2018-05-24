@@ -108,9 +108,10 @@
                                 </li>
                                 <li>
                                     <a href="#">审核/确认</a>
+                                    <span class="bubble">5</span>
                                 </li>
                                 <li>
-                                    <a href="morris.html">流转反馈</a>
+                                    <a href="feedback.html">流转反馈</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -168,7 +169,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="review">
                         </br>
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-search">
+                            <table width="100%" class="table table-hock table-striped table-bordered table-hover" id="dataTables-review">
                                 <thead>
                                     <tr>
                                         <th>编号</th>
@@ -182,8 +183,19 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="confirm">
-                            <h4>Profile Tab</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </br>
+                            <table width="100%" class="table table-hock table-striped table-bordered table-hover" id="dataTables-confirm">
+                                <thead>
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>事项</th>
+                                        <th>举报对象</th>
+                                        <th>地址</th>
+                                        <th>举报人</th>
+                                        <th>举报日期</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                         
@@ -212,11 +224,9 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="infoModalLabel">Modal title</h4>
+                                <h4 class="modal-title" id="infoModalLabel"></h4>
                             </div>
-                            <div class="modal-body">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            </div>
+                            <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 <button type="button" class="btn btn-primary">确定</button>
@@ -245,15 +255,57 @@
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
 
     <!-- render table -->
     <script>
+        var reviewTable = undefined, confirmTable = undefined;
         $(document).ready(function() {
-            var table = $('#dataTables-search').DataTable({
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                // 获取已激活的标签页的名称
+                var activeTab = $(e.target).attr('href');
+                if(!activeTab) return;
+                if(activeTab === "#review" && reviewTable === undefined){
+                    reviewTable = renderTab(0);
+                }else if(activeTab === "#confirm" && confirmTable === undefined){
+                    confirmTable = renderTab(1);
+                }
+            });
+            // 第一次显示渲染默认TAB页内容
+            reviewTable = renderTab(0);
+
+            // 设置默认ajax错误处理
+            $.ajaxSetup({
+                error: function (x, e) {
+                    $("#infoModal h4.modal-title").html("<i class='fa fa-warning'></i> 服务器请求错误");
+                    $("#infoModal div.modal-body").html("请求服务器时出现问题，请重试或联系管理员。");
+                    $("#infoModal button.btn-primary").unbind('click');
+                    $("#infoModal button.btn-primary").on('click', function() {$("#infoModal").modal('hide');});
+                    $("#infoModal").modal();
+                    return false;
+                }
+            });
+        });
+
+        /**
+        * 渲染TAB标签页内容
+        * return table对象
+        **/
+        function renderTab(type) {
+            var tEl,tbEl,url;
+            if(type===0){//待审核表
+                tEl = $('#dataTables-review');
+                url = '/data/data-review.json';
+            }else if(type===1){//待确认表
+                tEl = $('#dataTables-confirm');
+                url = '/data/data-confirm.json';
+            }
+            var table = tEl.DataTable({
                 responsive: true,
                 searching: false,
                 language: dataTableLangChn(),
-                ajax:'/data/data.json',
+                ajax:url,
                 columns:[
                     {data:"id"},
                     {data:"type"},
@@ -264,12 +316,14 @@
                 ]
             });
 
-            $('#dataTables-search tbody').on('dblclick', 'tr', function () {
+            $(table.table().body()).on('dblclick', 'tr', function () {
                 var data = table.row( this ).data();
                 // alert( 'You clicked on '+data['id']+'\'s row' );
                 showDetail(data['id']);
             });
-        });
+
+            return table;
+        }
 
         /**
          * 关闭详情显示区块，并重新展示查询列表
@@ -285,25 +339,20 @@
          * Ajax请求服务端获取举报信息详情JSON
          */
         function showDetail(id){
-            $.getJSON('/data/info-detail.json',{"id":id},function(data){
-                var attachments = data.attachments;
-                var attEl = genAttachEl(attachments);
-                var content = `<div class="info-detail-cell"><label>编号：</label> ${data.id}</div>
-                            <div class="info-detail-cell"><label>举报人：</label>${data.informer} <label>举报时间：</label>${data.date} <label>电话：${data.phone}</label></div>
-                            <div class="info-detail-cell"><label>举报对象</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
-                            <div class="info-detail-cell"><label>案件描述：</label><p>${data.desc}</p></div>
-                            <div class="info-detail-cell"><label>附件：</label>${attEl}</div>`;
+            $.getJSON('/data/info-detail'+id+'.json',{"id":id},function(data){
+                //生产详情内容
+                var content = genDetailInfoEL(data);
                 if(data.status){
                     // 待审核状态 显示审核按钮
                     if(data.status === "01") {
                         content += "<div class='info-detail-bottom button-right'>"+
-                        "<button type='button' class='btn btn-primary'>举报信息核实通过,转确认</button> "+
-                        "<button type='button' class='btn btn-danger'>举报信息核实不通过</button></div>";
+                        "<button type='button' class='btn btn-primary' onclick='confirmInfo(0,true)'>举报信息核实通过,转确认</button> "+
+                        "<button type='button' class='btn btn-danger' onclick='confirmInfo(0,false)'>举报信息核实不通过</button></div>";
                     }else if(data.status === "02") {// 待确认状态 显示确认按钮
                         content += "<div class='info-detail-bottom button-right'>"+
-                        "<button type='button' class='btn btn-primary' onclick='confirmInfo()'>确认流转</button> "+
+                        "<button type='button' class='btn btn-primary' onclick='confirmInfo(1,true)'>确认流转</button> "+
                         //"<button type='button' class='btn btn-warning'>驳回</button> "+
-                        "<button type='button' class='btn btn-danger'>不通过</button></div>";
+                        "<button type='button' class='btn btn-danger' onclick='confirmInfo(1,false)'>不通过</button></div>";
                     }
                 }
                 $('#info-detail div.panel-body').html(content);
@@ -313,47 +362,59 @@
         }
 
         /**
-         * 生成详情区块附件及图片内容区块HTML
-         * 
-         * */
-        function genAttachEl(attachments){
-            if(attachments){
-                var attachList = "";
-                var picList = "";
-                attachments.forEach(url => {
-                    var point = url.lastIndexOf("."); 
-                    var type = url.substr(point).toLowerCase(); 
-                    if(type===".jpg"||type==".gif"||type===".jpeg"||type===".bmp"||type===".npg"){ 
-                        picList += "<div class='info-attachment'><a target='_blank' href='"+url+"'><img width=200 height=200 src='"+url+"'></a></div>";
-                    }else{
-                        point = url.lastIndexOf("/");
-                        var fName = "";
-                        if(point>0) {
-                            fName = url.substr(point+1);
-                        }else{
-                            fName = url;
-                        }
-                        attachList += "<li><a target='_blank' href="+url+">附件("+fName+")</a></li>";
-                    }
-                });
-               
-                return "<ol>"+picList + attachList+"</ol>";
-            }
-        }
-
-        /**
         *  确认流转功能
         **/
-        function confirmInfo(){
-            $("#infoModal h4.modal-title").html("确认流转信息");
-            var bodyContent = '<div class="form-group">'+
+        function confirmInfo(flag,approve){
+            var title = '', bodyContent = '' ;
+            if (flag===undefined) return;
+            if(approve===false){
+                title = "审核不通过";
+                bodyContent = '<div class="form-group form-hock" action="refuse">'+
+                                    '<label>审核说明</label>'+
+                                    '<textarea class="form-control" rows="5"></textarea>'+
+                                '</div>';
+            }else if(flag===0){
+                title = "审核通过";
+                bodyContent = '<div class="form-group form-hock" action="review">'+
+                                    '<label>审核说明</label>'+
+                                    '<textarea class="form-control" rows="5"></textarea>'+
+                                '</div>';
+            }else if(flag===1){
+                title = "确认流转信息";
+                bodyContent = '<div class="form-group form-hock" action="confirm">'+
                                     '<label>流转接口人</label>'+
                                     '<input class="form-control">'+
                                     '<label>流转意见及说明</label>'+
                                     '<textarea class="form-control" rows="5"></textarea>'+
                                 '</div>';
+            }
+            
+            $("#infoModal h4.modal-title").html(title);
             $("#infoModal div.modal-body").html(bodyContent);
+            $("#infoModal button.btn-primary").unbind('click');
+            $("#infoModal button.btn-primary").click(doConfirm);
             $("#infoModal").modal();
+        }
+
+        /**
+        * 提交审核或确认信息
+        */
+        function doConfirm () {
+            var el = $('div.form-group.form-hock');
+            if(!el) return;
+            var action = el.attr("action");
+            //do some database update
+            alert('action:'+action);
+            // 关闭模态对话框
+            $("#infoModal").modal('hide');
+            // 关闭详细信息页面
+            closeDetail();
+            if(action==="review") {
+                reviewTable.ajax.reload();
+            }else if(action==="confirm") {
+                confirmTable.ajax.reload();
+            }
+            
         }
     </script>
 </body>

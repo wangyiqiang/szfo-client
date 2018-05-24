@@ -17,11 +17,17 @@
     <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
+    <!-- DataTables CSS -->
+    <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+    <!-- szfo CSS -->
+    <link href="../dist/css/szfo.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -32,7 +38,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
 </head>
 
 <body>
@@ -92,9 +98,9 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                         </li>
-                        <li>
+                        <li class="active">
                             <a href="#"><i class="fa fa-table fa-fw"></i> 举报信息管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -104,7 +110,7 @@
                                     <a href="confirm.html">审核/确认</a>
                                 </li>
                                 <li>
-                                    <a href="feedback.html">流转反馈</a>
+                                    <a href="#">流转反馈</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -113,7 +119,7 @@
                             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">用户编辑</a>
+                                    <a href="search1.html">用户编辑</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">权限配置</a>
@@ -143,117 +149,74 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">首页</h1>
+                    <h1 class="page-header">流转反馈</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>总举报</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-check fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>确认</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-hourglass-2 fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>流转</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>反馈</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
+            <div class="row" >
+                <div class="col-lg-12" id="table-panel-wrapper">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> 非法集资举报数据统计图
+                            <label>输入举报编号：</label><input id="input-info-id">
+                            <button class="btn btn-primary" onclick="showDetail()">获取信息</button>
+                        </div>
+                        <!-- /.panel-heading -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12 collapse" id="info-detail"> 
+                    <div class="panel panel-info ">
+                        <div class="panel-heading">
+                            举报详情
+                            <span class="fa fa-close fa-pull-right" onclick="closeDetail()"></span>
+                            <button class="btn btn-primary" onclick="showModal()">填写反馈信息</button>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris-area-chart"></div>
+                            <div>编号：</div>
+                            <div>举报人：举报时间：电话：</div>
+                            <div>举报对象：事项：地址：</div>
+                            <div>案件描述：</div>
+                            <div>附件：</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">填写反馈信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>反馈说明</label>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                    <label>附件上传</label>
+                                    <iframe name="uploadIframe" style="display:none"></iframe>
+                                    <form target="uploadIframe" action="upload.php" method="post" enctype="multipart/form-data">
+                                    <input class="filename" type="file" name="fileLabel">
+                                    <input type="submit" value="提交">
+                                    </form>
+                                    <input name="file1" type="file">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-default disabled">上传附件</button>
+                                <button type="button" class="btn btn-primary">确定</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
-            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -264,11 +227,63 @@
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
+
+    <!-- render table -->
+    <script>
+        /**
+         * 加载初始化
+         * */
+        $(document).ready(function () {
+            $('iframe[name="uploadIframe"]').on('load', function() {
+                console.log($('iframe')[0].contentDocument);
+                var responseText = $('iframe')[0].contentDocument.body.textContent;
+                var responseData = JSON.parse(responseText) || {};
+                if (responseData.isSuccess == true || responseData.code == 200) {
+                    //success
+                    alert('success');
+                } else {
+                    //error 
+                    alert('error');
+                }
+            });
+        });
+        /**
+         * 关闭详情显示区块，并重新展示查询列表
+         */
+        function closeDetail(){
+            $('#info-detail').hide();
+            $('#info-detail div.panel-body').html('');
+        }
+
+        /**
+         * 显示详情区块
+         * Ajax请求服务端获取举报信息详情JSON
+         */
+        function showDetail(id){
+            if(id===undefined){
+                id = $('#input-info-id').val();
+            }
+            $.getJSON('/data/info-detail.json',{"id":id},function(data){                
+                $('#info-detail div.panel-body').html(genDetailInfoEL(data));
+                $('#info-detail').show();
+            });
+        }
+
+        /**
+        * 显示模态对话框
+        */
+        function showModal(){
+            $("#feedbackModal").modal();
+        }
+    </script>
 </body>
 </html>
