@@ -1,30 +1,44 @@
 /**
- * 显示详情区块
- * Ajax请求服务端获取举报信息详情JSON
+ * 加载公共组件 事件
  */
-// function showDetail(id){
-//     if(id===undefined){
-//         id = $('#input-info-id').val();
-//     }
-//     $.getJSON('/data/info-detail.json',{"id":id},function(data){
-//         // var attachments = data.attachments;
-//         // var attEl = genAttachEl(attachments);
-//         // var content = `<div class="info-detail-cell"><label>编号：</label> ${data.id}</div>
-//         //             <div class="info-detail-cell"><label>举报人：</label>${data.informer} <label>举报时间：</label>${data.date} <label>电话：${data.phone}</label></div>
-//         //             <div class="info-detail-cell"><label>举报对象</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
-//         //             <div class="info-detail-cell"><label>案件描述：</label><p>${data.desc}</p></div>
-//         //             <div class="info-detail-cell"><label>附件：</label>${attEl}</div>
-//         //             <div class="splliter"><label>审批信息</label></div>
-//         //             <div>${genAppListEl(data.appList)}</div>
-//         //             <div class="splliter"><label>反馈信息</label></div>
-//         //             <div>${genFeedbackEL(data.feedback)}</div>`;
-//         $('#info-detail div.panel-body').html(genDetailInfoEL(data));
-//         $('#info-detail').show();
-//         if($('#table-panel-wrapper')!=undefined){
-//           $('#table-panel-wrapper').hide();
-//         }
-//     });
-// }
+$(document).ready(function(){
+    var changePwdFormEl = $('#changePwdModal');
+    if(changePwdFormEl.length===0){
+        var  el = `<div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">修改密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>旧密码</label>
+                            <input class="form-control" type="password" name="old_pwd">
+                            <label>新密码</label>
+                            <input class="form-control" type="password" name="new_pwd">
+                            <label>确认新密码</label>
+                            <input class="form-control" type="password" name="confirm_pwd">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        $('#wrapper').append(el);
+    }
+
+    /**
+     * 绑定修改秘密按钮click事件
+     * 
+     */
+    $('a#change_pwd').on('click', function(){
+        $('#changePwdModal').modal();
+    });
+});
 
 /**
  * 生成举报信息详情区块内容
@@ -35,7 +49,7 @@ function genDetailInfoEL (data) {
     var attEl = genAttachEl(attachments);
     var content = `<div class="info-detail-cell"><label>编号：</label> ${data.id}</div>
                 <div class="info-detail-cell"><label>举报人：</label>${data.informer} <label>举报时间：</label>${data.date} <label>电话：${data.phone}</label></div>
-                <div class="info-detail-cell"><label>举报对象</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
+                <div class="info-detail-cell"><label>举报对象：</label>${data.jbdx} <label>事项：</label>${data.type} <label>地址：</label>${data.addr}</div>
                 <div class="info-detail-cell"><label>案件描述：</label><p>${data.desc}</p></div>
                 <div class="info-detail-cell"><label>附件：</label>${attEl}</div>
                 <div class="splliter"><label>审批信息</label></div>

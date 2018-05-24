@@ -17,11 +17,18 @@
     <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
+    <!-- DataTables CSS -->
+    <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../vendor/datatables-plugins/select.bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+    <!-- szfo CSS -->
+    <link href="../dist/css/szfo.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -32,7 +39,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
 </head>
 
 <body>
@@ -92,13 +99,13 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> 举报信息管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="search.html">举报查询</a>
+                                    <a href="#">举报查询</a>
                                 </li>
                                 <li>
                                     <a href="confirm.html">审核/确认</a>
@@ -109,11 +116,11 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
+                        <li class="active">
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">用户编辑</a>
+                                    <a href="#">用户编辑</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">权限配置</a>
@@ -143,117 +150,53 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">首页</h1>
+                    <h1 class="page-header">用户管理</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>总举报</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-check fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>确认</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-hourglass-2 fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>流转</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>反馈</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
+            <div class="row" >
+                <div class="col-lg-12" id="table-panel-wrapper">
                     <div class="panel panel-default">
+                        <!--<div class="panel-heading">
+                            DataTables Advanced Tables
+                        </div>-->
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-search">
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>权限</th>
+                                        <th>创建日期</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12 collapse" id="info-detail"> 
+                    <div class="panel panel-info ">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> 非法集资举报数据统计图
+                            举报详情
+                            <span class="fa fa-close fa-pull-right" onclick="closeDetail()"></span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris-area-chart"></div>
+                            <div>编号：</div>
+                            <div>举报人：举报时间：电话：</div>
+                            <div>举报对象：事项：地址：</div>
+                            <div>案件描述：</div>
+                            <div>附件：</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                 </div>
             </div>
-            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -264,13 +207,115 @@
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.select.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-     <!-- Project Common JavaScript -->
-     <script src="../dist/js/szfo-common.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
+
+    <!-- render table -->
+    <script>
+        var userTable;
+        $(document).ready(function() {
+            userTable = $('#dataTables-search').DataTable({
+                responsive: true,
+                dom:'<"szfo-toolbar">frtip',
+                select:true,
+                language: dataTableLangChn(),
+                ajax:'/data/data-user.json',
+                columns:[
+                    {data:"id"},
+                    {data:"name"},
+                    {data:"role"},
+                    {data:"date"}
+                ]
+            });
+            // 生成工具条
+            var toolbarEl = `<div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary" ref="new">新增</button>
+                    <button type="button" class="btn btn-primary" ref="del">删除</button>
+                    <button type="button" class="btn btn-primary" ref="role">权限分配</button>
+                    <button type="button" class="btn btn-primary" ref="reset">重置密码</button>
+                    </div>`;
+            $("div.szfo-toolbar").html(toolbarEl);
+
+            // $('#dataTables-search tbody').on('dblclick', 'tr', function () {
+            //     var data = table.row( this ).data();
+            //     // alert( 'You clicked on '+data['id']+'\'s row' );
+            //     showDetail(data['id']);
+            // });
+            $('div.szfo-toolbar').on('click','button',function(){
+                var ref = $(this).attr('ref');
+                if(ref==="new"){
+                    showNewUserModal();
+                }else if(ref==="del"){
+                    deleteUser();
+                }else if(ref==="role"){
+                    showRoleModal();
+                }else if(ref==="reset"){
+                    resetUserPwd();
+                }
+            });
+        });
+
+        /**
+         * 显示新增用户模态框
+         */
+        function showNewUserModal(){
+            alert('new');
+        }
+        /**
+         * 删除用户
+         */
+        function deleteUser(){
+            var rows = userTable.rows('.selected').data();
+            if(rows.length===0){
+                alert("请选择要删除的用户");
+                reutrn;
+            }
+            for(var i=0;i<rows.length;i++) {
+                console.log(rows[i].id);
+            }
+            confirm('del');
+        }
+        /**
+         * 显示权限分配模态框
+         */
+        function showRoleModal(){
+            alert('role');
+        }
+        /**
+         * 重置用户密码
+         */
+        function resetUserPwd(){
+            confirm('reset');
+        }
+
+        /**
+         * 关闭详情显示区块，并重新展示查询列表
+         */
+        function closeDetail(){
+            $('#info-detail').hide();
+            $('#info-detail div.panel-body').html('');
+            $('#table-panel-wrapper').show();
+        }
+
+        /**
+         * 显示详情区块
+         * Ajax请求服务端获取举报信息详情JSON
+         */
+        function showDetail(id){
+            $.getJSON('/data/info-detail.json',{"id":id},function(data){
+                $('#info-detail div.panel-body').html(genDetailInfoEL(data));
+                $('#info-detail').show();
+                $('#table-panel-wrapper').hide();
+            });
+        }
+    </script>
 </body>
 </html>

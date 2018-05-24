@@ -82,7 +82,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户资料</a>
+                        <li><a href="#" id="change_pwd"><i class="fa fa-user fa-fw"></i> 修改密码</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
@@ -116,10 +116,10 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="search1.html">用户编辑</a>
+                                    <a href="user.html">用户编辑</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">权限配置</a>
@@ -195,19 +195,23 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>反馈说明</label>
-                                    <textarea class="form-control" rows="5"></textarea>
+                                    <textarea id="feedback_remark" class="form-control" rows="5"></textarea>
                                     <label>附件上传</label>
                                     <iframe name="uploadIframe" style="display:none"></iframe>
                                     <form target="uploadIframe" action="upload.php" method="post" enctype="multipart/form-data">
-                                    <input class="filename" type="file" name="fileLabel">
-                                    <input type="submit" value="提交">
+                                    <label>
+                                        <input class="filename" type="file" name="fileUpload">
+                                    </label>
+                                    <div id="uploaded_list"><ol></ol></div>
                                     </form>
-                                    <input name="file1" type="file">
+                                    <div class="loading-hock collapse">
+                                        <img src="../dist/img/loading.gif">上传中，请稍等……
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <button type="button" class="btn btn-default disabled">上传附件</button>
+                                <button type="button" disabled name="btnUpload" class="btn btn-default disabled"><i class="fa fa-upload"></i> 上传附件</button>
                                 <button type="button" class="btn btn-primary">确定</button>
                             </div>
                         </div>
@@ -243,18 +247,52 @@
          * 加载初始化
          * */
         $(document).ready(function () {
+            /**
+             * 附件上传回调
+             **/
             $('iframe[name="uploadIframe"]').on('load', function() {
-                console.log($('iframe')[0].contentDocument);
-                var responseText = $('iframe')[0].contentDocument.body.textContent;
-                var responseData = JSON.parse(responseText) || {};
-                if (responseData.isSuccess == true || responseData.code == 200) {
-                    //success
-                    alert('success');
-                } else {
-                    //error 
-                    alert('error');
+                try{
+                    var responseText = $('iframe')[0].contentDocument.body.textContent;
+                    var responseData = JSON.parse(responseText) || {};
+                    if (responseData.isSuccess == true || responseData.code == 200) {
+                        //success
+                        alert('success');
+                    } else {
+                        //error 
+                        alert("上传附件异常，请重试或联系管理员。");
+                    }
+                }catch(ex){
+                    alert("上传附件异常，请重试或联系管理员。");
+                }
+                $('input[name="fileUpload"]').val('');
+                $('button[name="btnUpload"]').attr("disabled",true);
+                $('button[name="btnUpload"]').addClass("disabled");
+                $('div.loading-hock').hide();
+                appendUploadAttachs();
+            });
+           
+            /**
+             * 附件选择事件
+             * */
+            $('input[name="fileUpload"]').on('change', function () {
+                var fn = $(this).val();
+                if(fn!=""){
+                    $('button[name="btnUpload"]').attr("disabled",false);
+                    $('button[name="btnUpload"]').removeClass("disabled");
+                }else{
+                    $('button[name="btnUpload"]').attr("disabled",true);
+                    $('button[name="btnUpload"]').addClass("disabled");
                 }
             });
+            /**
+             * 附件上传按钮提交事件
+             * 
+             */
+            $('button[name="btnUpload"]').on('click', function(){
+                $('form[target="uploadIframe"]').submit();
+                $('div.loading-hock').show();
+            });
+             
         });
         /**
          * 关闭详情显示区块，并重新展示查询列表
@@ -262,6 +300,7 @@
         function closeDetail(){
             $('#info-detail').hide();
             $('#info-detail div.panel-body').html('');
+            resetModal();
         }
 
         /**
@@ -283,6 +322,24 @@
         */
         function showModal(){
             $("#feedbackModal").modal();
+        }
+        /**
+         * 拼接已上传附件列表
+         * 
+         */
+        function appendUploadAttachs(){
+            $('#uploaded_list ol').append('<li><a href=#>附件</a></li>')
+        }
+        /**
+         * 重置反馈信息填写模态框
+         */
+        function resetModal(){
+            $('#feedback_remark').val('');
+            $('input[name="fileUpload"]').val('');
+            $('#uploaded_list ol').html('');
+            $('div.loading-hock').hide();
+            $('button[name="btnUpload"]').attr("disabled",true);
+            $('button[name="btnUpload"]').addClass("disabled");
         }
     </script>
 </body>

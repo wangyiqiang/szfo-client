@@ -21,6 +21,13 @@ function dataTableLangChn(){
     "oAria": {
         "sSortAscending":  ": 以升序排列此列",
         "sSortDescending": ": 以降序排列此列"
+    },
+    "select": {
+        "rows": {
+            "_": "选中 %d 条记录",
+            "0": "单击选择一条记录",
+            "1": "只有 1 条记录被选中"
+        }
     }
   }
 }
