@@ -172,14 +172,13 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="row">
-                        <div id="chart-wrapper" class="col-lg-8">
+                    <div style="width:100%;">
+                        <div id="chart-wrapper" style="display:inline-block;width:60%;vertical-align:top;">
                             <div id="morris-bar-chart"></div>
                         </div>
-                        <!-- /.col-lg-8 (nested) -->
-                        <div id="dataTables-wrapper" class="col-lg-4">
+                        <div id="dataTables-wrapper" style="display:inline-block;width:39.5%;">
                             <div class="table-responsive">
-                                <table id="dataTables-trend" class="table table-bordered table-hover table-striped">
+                                <table id="dataTables-trend" style="width:100%;" class="table table-bordered table-hover table-striped">
                                     <thead>
                                         <tr>
                                             <th>周期</th>
@@ -190,11 +189,20 @@
                                     </thead>
                                 </table>
                             </div>
-                            <!-- /.table-responsive -->
                         </div>
-                        <!-- /.col-lg-4 (nested) -->
                     </div>
-                    <!-- /.row -->
+                    <div class="row">
+                            <div class="col-lg-8">
+                                
+                            </div>
+                            <!-- /.col-lg-8 (nested) -->
+                            <div class="col-lg-4">
+                                
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.col-lg-4 (nested) -->
+                        </div>
+                        <!-- /.row -->
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -275,18 +283,16 @@
                 if($(this).hasClass("glyphicon-object-align-top")){
                     $(this).removeClass("glyphicon-object-align-top");
                     $(this).addClass("glyphicon-object-align-left");
-                    $("#chart-wrapper").removeClass();
-                    $("#dataTables-wrapper").removeClass();
-                    $("#chart-wrapper").addClass("col-lg-12");
-                    $("#dataTables-wrapper").addClass("col-lg-12");
+                    $("#chart-wrapper").attr("style","width:100%;padding-bottom:30px;");
+                    $("#dataTables-wrapper").attr("style","width:100%;");
                 }else{
                     $(this).removeClass("glyphicon-object-align-left");
                     $(this).addClass("glyphicon-object-align-top");
-                    $("#chart-wrapper").removeClass();
-                    $("#dataTables-wrapper").removeClass();
-                    $("#chart-wrapper").addClass("col-lg-8");
-                    $("#dataTables-wrapper").addClass("col-lg-4");
+                    $("#chart-wrapper").attr("style","display:inline-block;width:60%;vertical-align:top;");
+                    $("#dataTables-wrapper").attr("style","display:inline-block;width:39.5%;");
                 }
+                //调用morris缩放句柄
+                trendChart.resizeHandler();
             });
 
         });
