@@ -40,3 +40,13 @@ span.bubble{
   padding-top:5px;
   border-bottom:2px solid cadetblue;
 }
+
+.szfo-icon-warning {
+  color:darkgoldenrod;
+}
+.szfo-icon-error {
+  color:darkred;
+}
+.szfo-icon-info {
+  color:blue;
+}

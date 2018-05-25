@@ -2,9 +2,12 @@
  * 加载公共组件 事件
  */
 $(document).ready(function(){
+    /**
+     * 创建修改密码模态对话框
+     */
     var changePwdFormEl = $('#changePwdModal');
     if(changePwdFormEl.length===0){
-        var  el = `<div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        var  el = `<div class="modal fade" id="changePwdModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -30,7 +33,6 @@ $(document).ready(function(){
         </div>`;
         $('#wrapper').append(el);
     }
-
     /**
      * 绑定修改秘密按钮click事件
      * 
@@ -38,6 +40,56 @@ $(document).ready(function(){
     $('a#change_pwd').on('click', function(){
         $('#changePwdModal').modal();
     });
+
+    /**
+     * 创建公共弹出模态对话框
+     */
+    if($('#AlterModal').length===0){
+        var  el = `<div class="modal fade" id="AlterModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        $('#wrapper').append(el);
+    }
+});
+
+/**
+ * 模态提示框公共组件函数
+ * @argument msg message for alter
+ * @argument title alter title
+ * @argument type dialog type [info, warning, error]
+ */
+function modalAlter (msg, title, type) {
+    var icon;
+    if(type==="warning"){
+        icon = '<i class="fa fa-warning szfo-icon-warning"></i> ';
+    }else if(type==="error") {
+        icon = '<i class="fa fa-times-circle szfo-icon-error"></i> ';
+    }else{
+        icon = '<i class="fa fa-info szfo-icon-info"></i> ';
+    }
+    if(title===undefined) title = "";
+    $('#AlterModal h4.modal-title').html((icon+title));
+    $('#AlterModal div.modal-body').html(msg);
+    $('#AlterModal').modal();
+}
+// 设置默认ajax错误处理
+$.ajaxSetup({
+    error: function (x,e) {
+        var msg = "请求服务器时出现问题，请重试或联系管理员。";
+        modalAlter(msg,"服务器请求出错","error");
+        return false;
+    }
 });
 
 /**

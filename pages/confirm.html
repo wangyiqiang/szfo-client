@@ -275,17 +275,6 @@
             // 第一次显示渲染默认TAB页内容
             reviewTable = renderTab(0);
 
-            // 设置默认ajax错误处理
-            $.ajaxSetup({
-                error: function (x, e) {
-                    $("#infoModal h4.modal-title").html("<i class='fa fa-warning'></i> 服务器请求错误");
-                    $("#infoModal div.modal-body").html("请求服务器时出现问题，请重试或联系管理员。");
-                    $("#infoModal button.btn-primary").unbind('click');
-                    $("#infoModal button.btn-primary").on('click', function() {$("#infoModal").modal('hide');});
-                    $("#infoModal").modal();
-                    return false;
-                }
-            });
         });
 
         /**

@@ -178,29 +178,98 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-                <div class="col-lg-12 collapse" id="info-detail"> 
-                    <div class="panel panel-info ">
-                        <div class="panel-heading">
-                            举报详情
-                            <span class="fa fa-close fa-pull-right" onclick="closeDetail()"></span>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div>编号：</div>
-                            <div>举报人：举报时间：电话：</div>
-                            <div>举报对象：事项：地址：</div>
-                            <div>案件描述：</div>
-                            <div>附件：</div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
             </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
+
+    <!-- Modal New User-->
+    <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新增用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="formNewUser">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input name="user_id" class="form-control"></input>
+                        <label>姓名</label>
+                        <input name="user_name" class="form-control"></input>
+                        <label>权限</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="01">业务审批员
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="02">工作转办员
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="03">系统管理员
+                            </label>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!-- Modal Role-->
+    <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">分配权限</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="formRole">
+                    <div class="form-group">
+                        <label>权限</label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="01">业务审批员
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="02">工作转办员
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="03">系统管理员
+                            </label>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -244,11 +313,9 @@
                     </div>`;
             $("div.szfo-toolbar").html(toolbarEl);
 
-            // $('#dataTables-search tbody').on('dblclick', 'tr', function () {
-            //     var data = table.row( this ).data();
-            //     // alert( 'You clicked on '+data['id']+'\'s row' );
-            //     showDetail(data['id']);
-            // });
+            /**
+            * 绑定工具条按钮点击事件
+            */
             $('div.szfo-toolbar').on('click','button',function(){
                 var ref = $(this).attr('ref');
                 if(ref==="new"){
@@ -261,13 +328,42 @@
                     resetUserPwd();
                 }
             });
+
+            /** 
+            * 绑定新增用户模态框隐藏事件
+            * 重置表单
+            */
+            $('#newUserModal').on('hidden.bs.modal', function(){
+                document.formNewUser.reset();
+            });
+            /**
+            * 绑定新增用户确定按钮点击事件
+            */
+            $('#newUserModal button.btn-primary').on('click', function(){
+                console.log('save new user');
+                $('#newUserModal').modal('hide');
+            });
+            /** 
+            * 绑定权限模态框隐藏事件
+            * 重置表单
+            */
+            $('#roleModal').on('hidden.bs.modal', function(){
+                document.formRole.reset();
+            });
+            /**
+            * 绑定新增用户确定按钮点击事件
+            */
+            $('#roleModal button.btn-primary').on('click', function(){
+                console.log('save role');
+                $('#roleModal').modal('hide');
+            });
         });
 
         /**
          * 显示新增用户模态框
          */
         function showNewUserModal(){
-            alert('new');
+            $('#newUserModal').modal();
         }
         /**
          * 删除用户
@@ -276,24 +372,46 @@
             var rows = userTable.rows('.selected').data();
             if(rows.length===0){
                 alert("请选择要删除的用户");
-                reutrn;
+                return;
             }
             for(var i=0;i<rows.length;i++) {
                 console.log(rows[i].id);
             }
-            confirm('del');
+            if(confirm('是否确定删除选中用户？')){
+                console.log('do delete user');
+            }
         }
         /**
          * 显示权限分配模态框
          */
         function showRoleModal(){
-            alert('role');
+            var rows = userTable.rows('.selected').data();
+            if(rows.length===0){
+                alert("请选择一个用户");
+                return;
+            }
+            if(rows.length>1){
+                alert("只能选择一个用户");
+                return;
+            }
+            
+            $('#roleModal').modal();
         }
         /**
          * 重置用户密码
          */
         function resetUserPwd(){
-            confirm('reset');
+            var rows = userTable.rows('.selected').data();
+            if(rows.length===0){
+                alert("请选择要重置密码的用户");
+                return;
+            }
+            for(var i=0;i<rows.length;i++) {
+                console.log(rows[i].id);
+            }
+            if(confirm('是否确定重置选中用户密码？')){
+                console.log('do reset password');
+            }
         }
 
         /**

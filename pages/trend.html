@@ -146,117 +146,58 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">首页</h1>
+                    <h1 class="page-header">趋势分析</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>总举报</div>
-                                </div>
-                            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <i data-toggle="tooltip" title="切换展示方式"  id="viewToggle" class="glyphicon glyphicon-object-align-top"></i>
+                        举报信息趋势统计
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                统计方式
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right menu-hock" role="menu">
+                                <li><a href="#" value="y">年度统计</a>
+                                </li>
+                                <li><a href="#" value="m">月度统计</a>
+                                </li>
+                            </ul>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-check fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>确认</div>
-                                </div>
-                            </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div id="chart-wrapper" class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
+                        <!-- /.col-lg-8 (nested) -->
+                        <div id="dataTables-wrapper" class="col-lg-4">
+                            <div class="table-responsive">
+                                <table id="dataTables-trend" class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>周期</th>
+                                            <th>总数量</th>
+                                            <th>核实数量</th>
+                                            <th>处理数量</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-hourglass-2 fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>流转</div>
-                                </div>
-                            </div>
+                            <!-- /.table-responsive -->
                         </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+                        <!-- /.col-lg-4 (nested) -->
                     </div>
+                    <!-- /.row -->
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>反馈</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">查看详情</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <!-- /.panel-body -->
             </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> 非法集资举报数据统计图
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -265,15 +206,103 @@
     <script src="../vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Morris Charts JavaScript -->
     <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-     <!-- Project Common JavaScript -->
-     <script src="../dist/js/szfo-common.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
+
+    <script>
+        var trendTable, trendChart;
+        /**
+         * 初始化加载
+         */
+        $(document).ready(function(){
+            /**
+             * 初始化表格
+             */
+            trendTable = $("#dataTables-trend").DataTable({
+                dom:'t',
+                responsive: true,
+                paging:false,
+                language: dataTableLangChn(),
+                columns:[
+                    {data:"y"},
+                    {data:"a"},
+                    {data:"b"},
+                    {data:"c"}
+                ]
+            });
+            /**
+             * 添加报表小菜单点击事件
+             */
+            $('ul.menu-hock').on('click','a', function(){
+                var act = $(this).attr('value');
+                if(act===undefined) return;
+                loadData(act);
+            });
+            /**
+             * 初始化柱状图
+             */
+             trendChart = Morris.Bar({
+                element: 'morris-bar-chart',
+                data: [],
+                xkey: 'y',
+                ykeys: ['a', 'b', 'c'],
+                labels: ['总数', '核实' ,'处理'],
+                hideHover: 'auto',
+                resize: true
+            });
+            /**
+             * 加载数据
+             */
+            loadData("y");
+            /**
+             * 显示方式切换图标点击事件
+             */
+            $('#viewToggle').on('click',function(){
+                if($(this).hasClass("glyphicon-object-align-top")){
+                    $(this).removeClass("glyphicon-object-align-top");
+                    $(this).addClass("glyphicon-object-align-left");
+                    $("#chart-wrapper").removeClass();
+                    $("#dataTables-wrapper").removeClass();
+                    $("#chart-wrapper").addClass("col-lg-12");
+                    $("#dataTables-wrapper").addClass("col-lg-12");
+                }else{
+                    $(this).removeClass("glyphicon-object-align-left");
+                    $(this).addClass("glyphicon-object-align-top");
+                    $("#chart-wrapper").removeClass();
+                    $("#dataTables-wrapper").removeClass();
+                    $("#chart-wrapper").addClass("col-lg-8");
+                    $("#dataTables-wrapper").addClass("col-lg-4");
+                }
+            });
+
+        });
+
+        /**
+         * 获取数据
+         */
+        function loadData(type) {
+            $.getJSON('/data/data-trend-'+type+'.json',function(data){
+                //数据表加载数据
+                $('#dataTables-trend').dataTable().fnClearTable();
+                $('#dataTables-trend').dataTable().fnAddData(data.data); 
+                //柱状图加载数据
+                trendChart.setData(data.data);
+            });
+        }
+    </script>
 </body>
 </html>
