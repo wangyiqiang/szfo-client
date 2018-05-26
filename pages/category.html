@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="GBK">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>苏州金融办非法集资举报管理平台</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand" >非法集资举报管理平台 v1.0</span>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i>待处理信息
+                                    <span class="pull-right text-muted small">4</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#" id="change_pwd"><i class="fa fa-user fa-fw"></i> 修改密码</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> 举报信息管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="search.html">举报查询</a>
+                                </li>
+                                <li>
+                                    <a href="confirm.html">审核/确认</a>
+                                </li>
+                                <li>
+                                    <a href="feedback.html">流转反馈</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> 用户管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="flot.html">用户编辑</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">权限配置</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 统计分析<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="trend.html">趋势统计</a>
+                                </li>
+                                <li>
+                                    <a href="area.html">分布统计</a>
+                                </li>
+                                <li>
+                                    <a href="category.html">类型分析</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">类型分析</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <i data-toggle="tooltip" title="切换展示方式"  id="viewToggle" class="glyphicon glyphicon-object-align-top"></i>
+                        举报信息类型分析
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                统计方式
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right menu-hock" role="menu">
+                                <li><a href="#" value="y">年度统计</a>
+                                </li>
+                                <li><a href="#" value="m">月度统计</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div style="width:100%;">
+                        <div id="chart-wrapper" style="display:inline-block;width:60%;vertical-align:top;">
+                            <div id="morris-area-chart"></div>
+                        </div>
+                        <div id="dataTables-wrapper" style="display:inline-block;width:39.5%;">
+                            <div class="table-responsive">
+                                <table id="dataTables-category" style="width:100%;" class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>周期</th>
+                                            <th>诈骗</th>
+                                            <th>非法吸贷</th>
+                                            <th>网络赌博</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- Project Common JavaScript -->
+    <script src="../dist/js/szfo-common.js"></script>
+
+    <script>
+        var categoryTable, categoryChart;
+        /**
+         * 初始化加载
+         */
+        $(document).ready(function(){
+            /**
+             * 初始化表格
+             */
+            trendTable = $("#dataTables-category").DataTable({
+                dom:'t',
+                responsive: true,
+                paging:false,
+                language: dataTableLangChn(),
+                columns:[
+                    {data:"period"},
+                    {data:"a"},
+                    {data:"b"},
+                    {data:"c"}
+                ]
+            });
+            /**
+             * 添加报表小菜单点击事件
+             */
+            $('ul.menu-hock').on('click','a', function(){
+                var act = $(this).attr('value');
+                if(act===undefined) return;
+                loadData(act);
+            });
+            /**
+             * 初始化柱状图
+             */
+             categoryChart = Morris.Area({
+                element: 'morris-area-chart',
+                data: [],
+                xkey: 'period',
+                ykeys: ['a', 'b', 'c'],
+                labels: ['诈骗', '非法吸贷', '网络赌博'],
+                pointSize: 2,
+                hideHover: 'auto',
+                resize: true
+            });
+            /**
+             * 加载数据
+             */
+            loadData("y");
+            /**
+             * 显示方式切换图标点击事件
+             */
+            $('#viewToggle').on('click',function(){
+                if($(this).hasClass("glyphicon-object-align-top")){
+                    $(this).removeClass("glyphicon-object-align-top");
+                    $(this).addClass("glyphicon-object-align-left");
+                    $("#chart-wrapper").attr("style","width:100%;padding-bottom:30px;");
+                    $("#dataTables-wrapper").attr("style","width:100%;");
+                }else{
+                    $(this).removeClass("glyphicon-object-align-left");
+                    $(this).addClass("glyphicon-object-align-top");
+                    $("#chart-wrapper").attr("style","display:inline-block;width:60%;vertical-align:top;");
+                    $("#dataTables-wrapper").attr("style","display:inline-block;width:39.5%;");
+                }
+                //调用morris缩放句柄
+                categoryChart.resizeHandler();
+            });
+
+        });
+
+        /**
+         * 获取数据
+         */
+        function loadData(type) {
+            $.getJSON('/data/data-category-'+type+'.json',function(data){
+                //数据表加载数据
+                $('#dataTables-category').dataTable().fnClearTable();
+                $('#dataTables-category').dataTable().fnAddData(data.data); 
+                //柱状图加载数据
+                categoryChart.setData(data.data);
+            });
+        }
+    </script>
+</body>
+</html>
