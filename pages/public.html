@@ -30,6 +30,7 @@
             margin-right: 3px;
             margin-top:3px;
         }
+       
     </style>
 </head>
 
@@ -49,7 +50,7 @@
                     <a class="btn btn-default btn-lg " href="#search">查询我的举报</a>
                 </div>
                 <!--举报信息填写-->
-                <div id="infoForm" style="width:70%;">
+                <div id="infoForm" style="width:70%;"  class="collapse">
                     <form name="">
                         <div class="form-group">
                             <label>举报对象名称</label>
@@ -123,17 +124,22 @@
                     </form>
                 </div>
                 <!-- 举报信息查询 -->
-                <div id="search"  class="collapse">
-                    <label>手机号码</label>
-                    <div>
-                        <input type="text" class="form-control" name="phone" style="width:120px;display: inline-block">
-                        <button class="btn btn-default btn-smscode-hock">获取验证码</button>
-                    </div>
-                    <label>验证码</label>
-                    <div>
-                        <input type="text" class="form-control" name="phone" style="width:80px;display: inline-block">
-                        <button class="btn btn-primary">查询</button>
-                    </div>
+                <div id="search" >
+                    <div class="errorBox" id="searchValidatorError"></div>
+                    <form id="searchForm" class="form-inline">
+                        <div class="form-group">
+                            <label>手机号码</label>
+                            <input type="text" class="form-control" name="phone" style="width:120px;display: inline-block">
+                        </div>
+                        <div class="form-group">
+                            <label>验证码</label>
+                            <input type="text" class="form-control" name="vCode" style="width:80px;display: inline-block">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default btn-smscode-hock">获取验证码</button>
+                            <button class="btn btn-primary">查询</button>
+                        </div>
+                    </form>
                     <div style="padding-top:8px;">
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-search">
                             <thead>
@@ -267,6 +273,40 @@
                             }
                         },
                         vkey: {
+                            validators: {
+                                notEmpty:{
+                                    message : '验证码不能为空'
+                                }
+                            }
+                        },
+                    }
+                });
+
+                 $('#searchForm').bootstrapValidator({
+                    live: 'disabled',
+                    container: '#searchValidatorError',
+                    fields: {
+                        phone: {
+                            validators: {
+                                notEmpty: {
+                                    message: '手机号码不能为空'
+                                },
+                                callback: {
+                                    callback: function(value,validator){
+                                        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                                        if (!myreg.test(value)) {
+                                            return {
+                                                valid: false,
+                                                message: '手机号码不合格'
+                                            };
+                                        } else {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        vCode: {
                             validators: {
                                 notEmpty:{
                                     message : '验证码不能为空'
