@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrapValidator.min.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
     <!-- DataTables Responsive CSS -->
@@ -21,6 +22,15 @@
     <link href="../dist/css/szfo.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        i.fa-lg {
+            font:normal normal normal 200px/1 FontAwesome;
+        }
+        span.fa-trash-hock {
+            margin-right: 3px;
+            margin-top:3px;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,42 +49,85 @@
                     <a class="btn btn-default btn-lg " href="#search">查询我的举报</a>
                 </div>
                 <!--举报信息填写-->
-                <div id="infoForm" style="width:70%;" class="collapse">
+                <div id="infoForm" style="width:70%;">
                     <form name="">
-                        <label>举报对象名称</label>
-                        <input type="text" class="form-control" name="jbdx">
-                        <label>举报对象地址</label>
-                        <input type="text" class="form-control" name="addr">
-                        <label>事由</label>
-                        <textarea class="form-control" name="desc" rows="5"></textarea>
-                        
-                        <label>举报人姓名</label>
-                        <input type="text" class="form-control" name="informer" style="width:120px;">
-                        <label>举报人联系电话</label>
-                        <input type="text" class="form-control" name="phone" style="width:120px;">
-
-                        <label>上传照片或附件</label>
-                        <div style="padding:2px 0 5px 0;">
-                            <input type="file" class="" name="imgUpload">
+                        <div class="form-group">
+                            <label>举报对象名称</label>
+                            <div>
+                                <input type="text" class="form-control" name="jbdx">
+                            </div>
                         </div>
-
-                        <label>短信验证码</label>
-                        <div>
-                            <input type="text" class="form-control" name="vkey" style="width:80px;display: inline-block">
-                            <button>获取验证码</button>
+                        <div class="form-group">
+                            <label>举报对象地址</label>
+                            <div>
+                                <input type="text" class="form-control" name="addr">
+                            </div>
                         </div>
-
+                        <div class="form-group">
+                            <label>事由</label>
+                            <div>
+                                <textarea class="form-control" name="desc" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>举报人姓名</label>
+                            <div>
+                                <input type="text" class="form-control" name="informer" style="width:120px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>举报人联系电话</label>
+                            <div>
+                                <input type="text" class="form-control" name="phone" style="width:120px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>上传照片或附件</label>
+                            <div style="padding:2px 0 5px 0;">
+                                <input type="file" class="" name="imgUpload">
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                                    60%
+                                </div>
+                            </div>
+                            <!-- <div id="preview-wrapper" class="row scrollable"> -->
+                            <div class="panel panel-default pre-scrollable">
+                                <div class="panel-heading">
+                                    预览
+                                </div>
+                                <!-- /.panel-heading -->
+                                <div class="panel-body">     
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail" style="text-align:center"><i class="fa fa-file-word-o fa-lg" alt="预览" ></i> fdaslfja.doc</a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                    <div class="col-xs-6 col-md-3"><span class="fa fa-trash-o fa-trash-hock fa-pull-right" onclick="closeDetail()"></span><a href="/data/0.jpg" target="_blank" class="thumbnail"><img src="/data/0.jpg"  alt="预览"></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                        <div class="form-group">
+                            <label>短信验证码</label>
+                            <div>
+                                <input type="text" class="form-control" name="vkey" style="width:80px;display: inline-block">
+                                <button class="btn btn-default btn-smscode-hock">获取验证码</button>
+                            </div>
+                        </div>
                         <div style="padding-top:8px;">
                             <button class="btn btn-primary">提交信息</button>
+                            <button class='btn btn-default'>test</button>
                         </div>
                     </form>
                 </div>
                 <!-- 举报信息查询 -->
-                <div id="search">
+                <div id="search"  class="collapse">
                     <label>手机号码</label>
                     <div>
                         <input type="text" class="form-control" name="phone" style="width:120px;display: inline-block">
-                        <button>获取验证码</button>
+                        <button class="btn btn-default btn-smscode-hock">获取验证码</button>
                     </div>
                     <label>验证码</label>
                     <div>
@@ -120,8 +173,110 @@
         <!-- /.panel -->
     </div>
     <!-- /#wrapper -->
+    <script lang="javascript" src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrapValidator.min.js"></script>
     <script>
-        
+        $(document).ready(function(){
+            $('span.fa-trash-hock').on('click', function(){
+                $(this).parent().remove();
+            });
+            /**
+            * 验证码按钮事件
+            */
+            (function() {
+                var waitTime = 60;
+
+                var time = function(btn){
+                    console.log(btn);
+                    if (waitTime === 0) {
+                        btn.attr("disabled",false);
+                        btn.removeClass("disabled");
+                        btn.text("获取验证码");
+                        waitTime = 60;
+                    } else {
+                        btn.attr("disabled", true);
+                        btn.addClass("disabled");
+                        btn.text(waitTime+"秒后可以重新发送");
+                        waitTime --;
+                        setTimeout(function() {
+                            time(btn)
+                        }, 1000);
+                    }
+                }
+
+                $('button.btn-smscode-hock').on('click',function(){
+                    var btn = $(this);
+                    time(btn);
+                });
+            })();
+
+            /**
+            * 表单验证
+            */
+            (function(){
+                $('#infoForm').bootstrapValidator({
+                    live: 'disabled',
+                    fields: {
+                        jbdx: {
+                            validators: {
+                                notEmpty: {
+                                    message: '举报对象信息不能为空'
+                                }
+                            }
+                        },
+                        addr: {
+                            validators: {
+                                notEmpty: {
+                                    message: '地址信息不能为空'
+                                }
+                            }
+                        },
+                        phone: {
+                            validators: {
+                                notEmpty: {
+                                    message: '手机号码不能为空'
+                                },
+                                callback: {
+                                    callback: function(value,validator){
+                                        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                                        if (!myreg.test(value)) {
+                                            return {
+                                                valid: false,
+                                                message: '手机号码不合格'
+                                            };
+                                        } else {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        desc: {
+                            validators: {
+                                notEmpty:{
+                                    message : '事由内容不能为空'
+                                }
+                            }
+                        },
+                        informer: {
+                            validators: {
+                                notEmpty:{
+                                    message : '举报人不能为空'
+                                }
+                            }
+                        },
+                        vkey: {
+                            validators: {
+                                notEmpty:{
+                                    message : '验证码不能为空'
+                                }
+                            }
+                        },
+                    }
+                });
+            })();
+        });
     </script>
 </body>
 </html>
