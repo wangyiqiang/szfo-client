@@ -3,16 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-        <title>WeUI</title>
+        <title>非法集资群众举报</title>
         <!-- 引入 WeUI -->
         <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
-        <link rel="stylesheet" href="../vendor/wechat/example.css"/>
+        <link rel="stylesheet" href="../dist/css/szfo-wechat.css"/>
         <style>
-          .collapse {display: none;}
+          
         </style>
     </head>
     <body>
-        <div class="page navbar js_show">
+        <!--navigator start-->
+        <div class="page navbar">
             <div class="page__bd" style="height: 100%;">
                 <div class="weui-tab">
                     <div class="weui-navbar">
@@ -112,20 +113,75 @@
                       <!-- /tab end -->
                       <!-- search tab -->
                       <div id="tab_list" class="collapse">
-                        
+                        <div class="weui-cells__title">我的举报信息</div>
+                        <div class="weui-cells">
+                            <a class="weui-cell weui-cell_access btn-detail-hock" href="javascript:;">
+                                <div class="weui-cell__bd text_nowrap">苏州工业园区太平盛世金融平台有限公司</div>
+                                <div class="weui-cell__ft">待审核</div>
+                            </a>
+                            <a class="weui-cell weui-cell_access btn-detail-hock" href="javascript:;">
+                                <div class="weui-cell__bd text_nowrap">举报2</div>
+                                <div class="weui-cell__ft">待确认</div>
+                            </a>
+                        </div>
                       </div>
                       <!-- /tab end -->
                     </div>
                 </div>
             </div>
         </div>
+        <!--/navigator end-->
+        <!--info detail start-->
+        <div class="page preview collapse" >
+            <div class="page__hd">
+                <h1 class="page__title">信息详情</h1>
+            </div>
+            <div class="page__bd">
+                <div class="weui-form-preview">
+                    <div class="weui-form-preview__hd">
+                        <div class="weui-form-preview__item"  style="text-align:left;">
+                            <label class="weui-form-preview__label">提交日期</label>
+                            <span class="">2018年05月13日 13:48:59</span>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__bd"  style="text-align:left;">
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">举报对象</label>
+                            <span class="weui-form-preview__value">电动打蛋机</span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">地址</label>
+                            <span class="">名字名字名字</span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">事由</label>
+                            <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字</span>
+                        </div>
+                        <div class="weui-form-preview__item">
+                            <label class="weui-form-preview__label">状态</label>
+                            <span class="weui-form-preview__value">等待审核</span>
+                        </div>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary btn-detail-hock" href="javascript:;">返回</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/info detail end-->
         <script type="text/javascript" src="../vendor/wechat/zepto.min.js"></script>
         <script type="text/javascript">
             $(function(){
+                // 标签页切换
                 $('.weui-navbar__item').on('click', function () {
                     $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-                    
                     $($(this).attr('target')).removeClass('collapse').siblings('div').addClass('collapse');
+                });
+                // 详细信息切换
+                console.log($('a.btn-detail-hock').length);
+                $('a.btn-detail-hock').on('click',function(){
+                    console.log('to');
+                    $('div.page').toggleClass('collapse');
                 });
             });
         </script>
