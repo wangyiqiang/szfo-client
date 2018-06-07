@@ -5,10 +5,11 @@
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
         <title>非法集资群众举报</title>
         <!-- 引入 WeUI -->
-        <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
+        <link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
         <link rel="stylesheet" href="../dist/css/szfo-wechat.css"/>
         <style>
-          
+          body, html,#gismap{width: 100%;height: 100%;margin:0;}
+          /* body, html{overflow: hidden;}  */
         </style>
     </head>
     <body>
@@ -39,10 +40,10 @@
                         <div class="weui-cells">
                             <div class="weui-cell weui-cell_vcode">
                                 <div class="weui-cell__bd">
-                                    <input class="weui-input" type="text" placeholder="">
+                                    <input class="weui-input" id="data-addr" type="text" placeholder="">
                                 </div>
                                 <div class="weui-cell__ft">
-                                    <button class="weui-vcode-btn">定位</button>
+                                    <button class="weui-vcode-btn btn-geo-hock">定位</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +80,7 @@
                                         <div class="weui-uploader">
                                             <div class="weui-uploader__hd">
                                                 <p class="weui-uploader__title">图片上传</p>
-                                                <div class="weui-uploader__info">0/2</div>
+                                                <div id="uploader-count-info" class="weui-uploader__info">0/9</div>
                                             </div>
                                             <div class="weui-uploader__bd">
                                                 <ul class="weui-uploader__files" id="uploaderFiles">
@@ -96,7 +97,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="weui-uploader__input-box">
-                                                    <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                                    <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="9">
                                                 </div>
                                             </div>
                                         </div>
@@ -169,19 +170,169 @@
             </div>
         </div>
         <!--/info detail end-->
+        <!-- 地图区域 -->
+        <div id="gismap" class="collapse" ></div>
+        <!-- /地区区域 -->
         <script type="text/javascript" src="../vendor/wechat/zepto.min.js"></script>
         <script type="text/javascript">
+            var initBMap;
+
             $(function(){
                 // 标签页切换
                 $('.weui-navbar__item').on('click', function () {
+                    // 标签panel区域切换显示
                     $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
                     $($(this).attr('target')).removeClass('collapse').siblings('div').addClass('collapse');
                 });
                 // 详细信息切换
-                console.log($('a.btn-detail-hock').length);
                 $('a.btn-detail-hock').on('click',function(){
-                    console.log('to');
+                    // 详情页面显示/隐藏切换
                     $('div.page').toggleClass('collapse');
+                });
+                // 打开地图
+                var showMap = function() {
+                    if($('button.btn-geo-hock').hasClass("created")===false){
+                        loadBMapJScript();
+                    }
+                    $('.page.navbar').addClass('collapse');
+                    $('#gismap').removeClass('collapse');
+                }                    
+
+                // 定位按钮事件
+                $('button.btn-geo-hock').on('click', function(){showMap();});
+
+                //百度地图API功能加载
+                var loadBMapJScript = function() {
+                    var script = document.createElement("script");
+                    script.type = "text/javascript";
+                    script.src = "http://api.map.baidu.com/api?v=2.0&ak=yTEauIvBPXOVByrGmBYrE3PAoBjoHerS&callback=initBMap";
+                    document.body.appendChild(script);
+                }
+
+                // 初始化地图服务
+                initBMap = function () {
+                    var map = new BMap.Map("gismap");            // 创建Map实例
+                    var geoc = new BMap.Geocoder();    
+                    map.centerAndZoom("苏州", 15);  // 初始化地图,设置中心点坐标和地图级别
+                    //添加地图类型控件 
+                    map.setCurrentCity("苏州");          // 设置地图显示的城市 此项是必须设置的
+                    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+                    var geolocation = new BMap.Geolocation();
+                    geolocation.getCurrentPosition(function(r){
+                        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                            addMarkerToPoint(r.point);
+                        }else {
+                            alert('获取位置失败：'+this.getStatus());
+                        }        
+                    });
+
+                    function showInfo(e){
+                        var pt = e.point;
+                        addMarkerToPoint(pt);
+                    }
+
+                    function addMarkerToPoint(pt){
+                        geoc.getLocation(pt, function(rs){
+                            var addComp = rs.addressComponents;
+                            var address = addComp.province + addComp.city+ addComp.district + addComp.street + addComp.streetNumber;
+                            var mk = new BMap.Marker(pt);
+                            //清空所有之前overlay
+                            map.clearOverlays();
+                            map.addOverlay(mk);
+                            map.panTo(pt);
+                            var labelgps = new BMap.Label(address, { offset: new BMap.Size(20, -10) });  
+                            mk.setLabel(labelgps); //添加GPS标注    
+                            //将地址填入表单
+                            $('#data-addr').val(address);  
+                        });        
+                    }
+                    // 触屏长按事件获取位置
+	                map.addEventListener("longpress", showInfo); 
+                    // 标记地图区域已经被创建过
+                    $('button.btn-geo-hock').addClass("created");
+                    // 定义一个控件类,即function
+                    function ZoomControl(){
+                    // 默认停靠位置和偏移量
+                    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+                    this.defaultOffset = new BMap.Size(10, 10);
+                    }
+
+                    // 通过JavaScript的prototype属性继承于BMap.Control
+                    ZoomControl.prototype = new BMap.Control();
+
+                    // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+                    // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+                    ZoomControl.prototype.initialize = function(map){
+                    // 创建一个DOM元素
+                    var div = document.createElement("div");
+                    // 添加文字说明
+                    div.appendChild(document.createTextNode("返回"));
+                    // 设置样式
+                    div.style.cursor = "pointer";
+                    div.style.border = "1px solid gray";
+                    div.style.backgroundColor = "white";
+                    div.style.borderRadius = "2px";
+                    // 绑定事件,点击一次放大两级
+                    div.onclick = function(e){
+                        //map.setZoom(map.getZoom() + 2);
+                        $('.page.navbar').removeClass('collapse');
+                        $('#gismap').addClass('collapse');
+                    }
+                    // 添加DOM元素到地图中
+                    map.getContainer().appendChild(div);
+                    // 将DOM元素返回
+                    return div;
+                    }
+                    // 创建控件
+                    var myZoomCtrl = new ZoomControl();
+                    // 添加到地图当中
+                    map.addControl(myZoomCtrl);
+                }
+
+                // 图片控件定义
+                var tmpl = '<li class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+                $gallery = $("#gallery"),
+                $galleryImg = $("#galleryImg"),
+                $uploaderInput = $("#uploaderInput"),
+                $uploaderFiles = $("#uploaderFiles");
+                // 图片选择按钮事件
+                $uploaderInput.on("change", function(e) {
+                    var src, url = window.URL || window.webkitURL || window.mozURL,
+                    files = e.target.files;
+                    var maxSize = $('#uploader-count-info').text().split('/')[1];
+                    var curSize = $uploaderFiles.children().length;
+                    var left = maxSize - curSize;
+                    for(var i = 0, len = files.length; i < len && left>0; ++i,--left) {
+                        var file = files[i];
+                        if(url) {
+                            src = url.createObjectURL(file);
+                        } else {
+                            src = e.target.result;
+                        }
+                        console.log("url:"+src);
+                        $uploaderFiles.append($(tmpl.replace('#url#', src)));
+                    }
+                    // 更新上传数量信息
+                    $('#uploader-count-info').text(maxSize-left+'/'+maxSize);
+                    if(left===0){
+                        $('#uploaderInput').parent().addClass('collapse');
+                    }
+                });
+                // 图片预览事件
+                var index; //第几张图片
+                $uploaderFiles.on("click", "li", function() {
+                    index = $(this).index();
+                    $galleryImg.attr("style", this.getAttribute("style"));
+                    $gallery.fadeIn(100);
+                });
+                $gallery.on("click", function() {
+                    $gallery.fadeOut(100);
+                });
+                //删除图片
+                $(".weui-gallery__del").click(function() { 
+                    console.log('删除');
+                    $uploaderFiles.find("li").eq(index).remove();
+                    $('#uploaderInput').parent().removeClass('collapse');
                 });
             });
         </script>
