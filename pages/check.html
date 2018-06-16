@@ -19,6 +19,7 @@
 
     <!-- DataTables CSS -->
     <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../vendor/datatables-plugins/select.bootstrap.min.css" rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
     <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
@@ -150,26 +151,24 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">审核/确认</h1>
+                    <h1 class="page-header">信息审核</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row" >
                 <div class="col-lg-12" id="table-panel-wrapper">
-                    
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#review" data-toggle="tab">待审核举报</a>
-                        </li>
-                        <li><a href="#confirm" data-toggle="tab">待确认举报</a>
-                        </li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="review">
-                        </br>
-                            <table width="100%" class="table table-hock table-striped table-bordered table-hover" id="dataTables-review">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="text-align: right;">
+                            <div id="toolbar-check" class="btn-group" role="group">
+                                <button type="button" class="btn btn-primary disabled btn-approve-hook"><i class="fa fa-check fa-fw"></i> 审核通过</button>
+                                <button type="button" class="btn btn-primary disabled btn-merge-hook"><i class="fa fa-folder fa-fw"></i> 并案处理</button>
+                                <button type="button" class="btn btn-danger disabled btn-dismiss-hook"><i class="fa fa-times fa-fw"></i> 审核不通过</button>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-hock table-striped table-bordered table-hover" id="dataTables-check">
                                 <thead>
                                     <tr>
                                         <th>编号</th>
@@ -182,30 +181,16 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="tab-pane fade" id="confirm">
-                        </br>
-                            <table width="100%" class="table table-hock table-striped table-bordered table-hover" id="dataTables-confirm">
-                                <thead>
-                                    <tr>
-                                        <th>编号</th>
-                                        <th>状态</th>
-                                        <th>举报对象</th>
-                                        <th>地址</th>
-                                        <th>举报人</th>
-                                        <th>举报日期</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                        <!-- /.panel-body -->
                     </div>
-                        
+                    <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-12 collapse" id="info-detail"> 
                     <div class="panel panel-info ">
                         <div class="panel-heading">
                             举报详情
-                            <span class="fa fa-close fa-pull-right" onclick="closeDetail()"></span>
+                            <span style="cursor:pointer;" class="fa fa-close fa-pull-right detail-close-hook"></span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -218,15 +203,55 @@
                         <!-- /.panel-body -->
                     </div>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <!-- Modal Approve-->
+                <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="infoModalLabel"></h4>
+                                <h4 class="modal-title">审核通过</h4>
                             </div>
-                            <div class="modal-body"></div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>请选择受理方式</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="approve-type" value="new">创建新的案件
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="approve-type" value="exist">并入已有案件
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>举报对象</label>
+                                    <input type="text" class="form-control" placeholder="举报对象名称">
+                                    <label>地址</label>
+                                    <input type="text" class="form-control" placeholder="举报对象地址">
+                                    <label>所属区域</label>
+                                    <select class="form-control">
+                                        <option></option>
+                                        <option>姑苏区</option>
+                                        <option>吴中区</option>
+                                        <option>相城区</option>
+                                        <option>虎丘区</option>
+                                        <option>吴江区</option>
+                                        <option>工业园区</option>
+                                        <option>常熟市</option>
+                                        <option>昆山市</option>
+                                        <option>太仓市</option>
+                                        <option>张家港市</option>
+                                    </select>
+                                    <label>受理说明</label>
+                                    <textarea class="form-control" rows="3" placeholder="填写审核通过理由及受理说明"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="输入举报对象检索案件...">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><i calss="fa fa-search">&nbsp;</i></button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                                 <button type="button" class="btn btn-primary">确定</button>
@@ -251,6 +276,7 @@
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.select.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
@@ -260,95 +286,117 @@
 
     <!-- render table -->
     <script>
-        var reviewTable = undefined, confirmTable = undefined;
         $(document).ready(function() {
-            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                // 获取已激活的标签页的名称
-                var activeTab = $(e.target).attr('href');
-                if(!activeTab) return;
-                if(activeTab === "#review" && reviewTable === undefined){
-                    reviewTable = renderTab(0);
-                }else if(activeTab === "#confirm" && confirmTable === undefined){
-                    confirmTable = renderTab(1);
-                }
-            });
-            // 第一次显示渲染默认TAB页内容
-            reviewTable = renderTab(0);
+            // 渲染待审核列表内容
+            var checkTable = renderTable();
+            /**
+            * 渲染TABLE内容
+            * return table对象
+            **/
+            function renderTable() {
+                var tEl = $('#dataTables-check');
+                var url = '/data/data-review.json';//'/api/checklist';
+                
+                var table = tEl.DataTable({
+                    responsive: true,
+                    searching: false,
+                    select:true,
+                    language: dataTableLangChn(),
+                    ajax:url,
+                    columns:[
+                        {data:"id"},
+                        {data:"status"},
+                        {data:"defendant"},
+                        {data:"address"},
+                        {data:"informant"},
+                        {data:"create_date"}
+                    ]
+                });
 
-        });
-
-        /**
-        * 渲染TAB标签页内容
-        * return table对象
-        **/
-        function renderTab(type) {
-            var tEl,tbEl,url;
-            if(type===0){//待审核表
-                tEl = $('#dataTables-review');
-                url = '/data/data-review.json';
-            }else if(type===1){//待确认表
-                tEl = $('#dataTables-confirm');
-                url = '/data/data-confirm.json';
-            }
-            var table = tEl.DataTable({
-                responsive: true,
-                searching: false,
-                language: dataTableLangChn(),
-                ajax:url,
-                columns:[
-                    {data:"id"},
-                    {data:"type"},
-                    {data:"jbdx"},
-                    {data:"addr"},
-                    {data:"informer"},
-                    {data:"date"}
-                ]
-            });
-
-            $(table.table().body()).on('dblclick', 'tr', function () {
-                var data = table.row( this ).data();
-                // alert( 'You clicked on '+data['id']+'\'s row' );
-                showDetail(data['id']);
-            });
-
-            return table;
-        }
-
-        /**
-         * 关闭详情显示区块，并重新展示查询列表
-         */
-        function closeDetail(){
-            $('#info-detail').hide();
-            $('#info-detail div.panel-body').html('');
-            $('#table-panel-wrapper').show();
-        }
-
-        /**
-         * 显示详情区块
-         * Ajax请求服务端获取举报信息详情JSON
-         */
-        function showDetail(id){
-            $.getJSON('/data/info-detail'+id+'.json',{"id":id},function(data){
-                //生产详情内容
-                var content = genDetailInfoEL(data);
-                if(data.status){
-                    // 待审核状态 显示审核按钮
-                    if(data.status === "01") {
-                        content += "<div class='info-detail-bottom button-right'>"+
-                        "<button type='button' class='btn btn-primary' onclick='confirmInfo(0,true)'>举报信息核实通过,转确认</button> "+
-                        "<button type='button' class='btn btn-danger' onclick='confirmInfo(0,false)'>举报信息核实不通过</button></div>";
-                    }else if(data.status === "02") {// 待确认状态 显示确认按钮
-                        content += "<div class='info-detail-bottom button-right'>"+
-                        "<button type='button' class='btn btn-primary' onclick='confirmInfo(1,true)'>确认流转</button> "+
-                        //"<button type='button' class='btn btn-warning'>驳回</button> "+
-                        "<button type='button' class='btn btn-danger' onclick='confirmInfo(1,false)'>不通过</button></div>";
+                $(table.table().body()).on('dblclick', 'tr', function () {
+                    var data = table.row( this ).data();
+                    // alert( 'You clicked on '+data['id']+'\'s row' );
+                    showDetail(data['id']);
+                });
+                //选择行事件
+                table.on( 'select', function ( e, dt, type, indexes ) {
+                    if ( type === 'row' ) {
+                        //var data = table.rows( indexes ).data().pluck( 'id' );
+                        $('#toolbar-check .btn').removeClass('disabled');
                     }
-                }
-                $('#info-detail div.panel-body').html(content);
-                $('#info-detail').show();
-                $('#table-panel-wrapper').hide();
+                });
+                //取消行选择事件
+                table.on( 'deselect', function ( e, dt, type, indexes ) {
+                    if ( type === 'row' ) {
+                        //var data = table.rows( indexes ).data().pluck( 'id' );
+                        if(table.rows('.selected').data().length===0){
+                            $('#toolbar-check .btn').addClass('disabled');
+                        }
+                    }
+                });
+                //返回table对象
+                return table;
+            }
+            // 关闭详情
+            $('span.detail-close-hook').on('click',function(){
+                closeDetail();
             });
-        }
+            /**
+            * 关闭详情显示区块，并重新展示查询列表
+            */
+            function closeDetail(){
+                $('#info-detail').hide();
+                $('#info-detail div.panel-body').html('');
+                $('#table-panel-wrapper').show();
+            }
+            /**
+            * 显示详情区块
+            * Ajax请求服务端获取举报信息详情JSON
+            */
+            function showDetail(id){
+                var url = '/data/info-detail.1.json';// '/api/accusation'
+                $.getJSON(url,{"id":id},function(data){
+                    //生产详情内容
+                    var content = genDetailInfoEL(data.data);
+                    if(data.code==0){
+                        // 生成审核按钮
+                        content += '<div class="btn-group info-detail-bottom button-right" role="group">'+
+                                '<button type="button" class="btn btn-primary btn-approve-hook"><i class="fa fa-check fa-fw"></i> 审核通过</button>'+
+                                '<button type="button" class="btn btn-primary btn-merge-hook"><i class="fa fa-folder fa-fw"></i> 并案处理</button>'+
+                                '<button type="button" class="btn btn-danger btn-dismiss-hook"><i class="fa fa-times fa-fw"></i> 审核不通过</button>'+
+                            '</div>';
+                        
+                        $('#info-detail div.panel-body').html(content);
+                        $('#info-detail').show();
+                        $('#table-panel-wrapper').hide();
+                    }else{
+                        modalAlter(data.msg,'提示','info');
+                    }
+                });
+            }
+            /**
+            * 通过按钮事件
+            */
+            $('body').on('click','button.btn-approve-hook',function(){
+                if($(this).hasClass('disabled')){return;}
+                //alert('approve');
+                $('#approveModal').modal();
+            });
+             /**
+            * 并案按钮事件
+            */
+            $('body').on('click','button.btn-merge-hook',function(){
+                if($(this).hasClass('disabled')){return;}
+                alert('merge');
+            });
+             /**
+            * 不通过按钮事件
+            */
+            $('body').on('click','button.btn-dismiss-hook',function(){
+                if($(this).hasClass('disabled')){return;}
+                alert('dismiss');
+            });
+        });
 
         /**
         *  确认流转功能
