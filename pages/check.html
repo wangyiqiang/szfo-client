@@ -39,7 +39,20 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+    <style>
+        .typeahead.dropdown-menu {
+            z-index: 9999;
+        }
+        .case_wrapper {
+            margin-top:10px;
+            border-left:5px solid #007ACC;
+            border-right: 1px solid #e8e8e8;
+            border-bottom: 1px solid #e8e8e8;
+            border-top: 1px solid #e8e8e8;
+            border-radius: 5px;
+            padding: 8px;
+        }
+    </style>
 </head>
 
 <body>
@@ -155,6 +168,7 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+            
             <!-- /.row -->
             <div class="row" >
                 <div class="col-lg-12" id="table-panel-wrapper">
@@ -212,8 +226,9 @@
                                 <h4 class="modal-title">审核通过</h4>
                             </div>
                             <div class="modal-body">
+                                <form id="approve_form">
                                 <div class="form-group">
-                                    <label>请选择受理方式</label>
+                                    <label>请选择受理方式：</label>
                                     <label class="radio-inline">
                                         <input type="radio" name="approve-type" value="new">创建新的案件
                                     </label>
@@ -221,12 +236,12 @@
                                         <input type="radio" name="approve-type" value="exist">并入已有案件
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label>举报对象</label>
+                                <div id="new_case_wrapper" class="form-group collapse">
+                                    <label>举报对象：</label>
                                     <input type="text" class="form-control" placeholder="举报对象名称">
-                                    <label>地址</label>
+                                    <label>地址：</label>
                                     <input type="text" class="form-control" placeholder="举报对象地址">
-                                    <label>所属区域</label>
+                                    <label>所属区域：</label>
                                     <select class="form-control">
                                         <option></option>
                                         <option>姑苏区</option>
@@ -240,17 +255,27 @@
                                         <option>太仓市</option>
                                         <option>张家港市</option>
                                     </select>
-                                    <label>受理说明</label>
+                                    <label>受理说明：</label>
                                     <textarea class="form-control" rows="3" placeholder="填写审核通过理由及受理说明"></textarea>
                                 </div>
-                                <div class="form-group">
+                                <div id="exist_case_wrapper" class="form-group collapse">
+                                    <label>已有案件：</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="输入举报对象检索案件...">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button"><i calss="fa fa-search">&nbsp;</i></button>
+                                        <input autocomplete="off" data-provide="typeahead" type="text" id="case-lookup" class="form-control" placeholder="输入举报对象检索案件...">
+                                         <span class="input-group-btn">
+                                            <button class="btn btn-default" id="btn-lookup-all" type="button">v</button>
                                         </span>
-                                    </div><!-- /input-group -->
+                                    </div>
+                                    <div class="case_wrapper">
+                                        <label>地址：</label>
+                                        <div>深圳市南山区科技园南区R2</div>
+                                        <label>受理说明：</label>
+                                        <div><p> 这篇文章主要介绍了使用Bootstrap typeahead插件实现搜索框自动补全的方法的相关资料,非常不错,具有参考借鉴价值,需要的朋友可以参考下</p></div>
+                                        <label>受理时间：</label>
+                                        <div>2018-06-17</div>
+                                    </div>
                                 </div>
+                                </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -279,6 +304,7 @@
     <script src="../vendor/datatables-plugins/dataTables.select.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.chinese.lang.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="../dist/js/bootstrap-typeahead.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
     <!-- Project Common JavaScript -->
@@ -382,6 +408,12 @@
                 //alert('approve');
                 $('#approveModal').modal();
             });
+            //通过模态框隐藏事件回调
+            $('#approveModal').on('hidden.bs.modal', function (e) {
+                $('#approveModal form').get(0).reset();
+                $('#exist_case_wrapper').addClass('collapse');
+                $('#new_case_wrapper').addClass('collapse');
+            })
              /**
             * 并案按钮事件
             */
@@ -395,6 +427,54 @@
             $('body').on('click','button.btn-dismiss-hook',function(){
                 if($(this).hasClass('disabled')){return;}
                 alert('dismiss');
+            });
+            //新建案件|并入案件单选按钮事件
+            $('input[type="radio"][name="approve-type"]').on('click',function(){
+                var typeVal = $(this).val();
+                if(typeVal=='new'){
+                    $('#exist_case_wrapper').addClass('collapse');
+                    $('#new_case_wrapper').removeClass('collapse');
+                }else if(typeVal=='exist'){
+                    $('#exist_case_wrapper').removeClass('collapse');
+                    $('#new_case_wrapper').addClass('collapse');
+                }
+            });
+            /**
+            * 自动完成输入框
+            */
+            $("#case-lookup").typeahead({
+                ajax: {
+                    url: '/data/case-list.json',
+                    //timeout: 300,
+                    method: 'get',
+                    triggerLength: 1,
+                    dataType: 'JSON',
+                    loadingClass: null,
+                    displayField: 'localName',
+                    preProcess: function (result) {
+                        
+                        return result;
+                    }
+                },
+                display: "localName",
+                val: "localID",
+                items: 8,
+                itemSelected: function (item, val, text) {
+                   // $("#case-lookup").attr("tag", val);
+                    //$("#case-lookup").val(text);
+                },
+                matcher: function (obj) {
+                    //var item = JSON.parse(obj);
+                    return true;
+                }
+            });
+            //下来菜单模仿按钮实现自动弹出
+            $('#btn-lookup-all').on('click',function(){
+                $("#case-lookup").focus();
+                $("#case-lookup").val('');
+                $("#case-lookup").trigger('keyup');
+                $("#case-lookup").val(' ');
+                $("#case-lookup").trigger('keyup');
             });
         });
 
