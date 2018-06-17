@@ -175,9 +175,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" style="text-align: right;">
                             <div id="toolbar-check" class="btn-group" role="group">
-                                <button type="button" class="btn btn-primary disabled btn-approve-hook"><i class="fa fa-check fa-fw"></i> 审核通过</button>
-                                <button type="button" class="btn btn-primary disabled btn-merge-hook"><i class="fa fa-folder fa-fw"></i> 并案处理</button>
-                                <button type="button" class="btn btn-danger disabled btn-dismiss-hook"><i class="fa fa-times fa-fw"></i> 审核不通过</button>
+                                <button type="button" disabled class="btn btn-primary disabled btn-approve-hook" data-toggle="modal" data-target="#approveModal"><i class="fa fa-check fa-fw"></i> 审核通过</button>
+                                <button type="button" disabled class="btn btn-primary disabled btn-merge-hook" data-toggle="modal" data-target="#approveModal"><i class="fa fa-folder fa-fw"></i> 并案处理</button>
+                                <button type="button" disabled class="btn btn-danger disabled btn-dismiss-hook" data-toggle="modal" data-target="#dismissModal"><i class="fa fa-times fa-fw"></i> 审核不通过</button>
                             </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -227,7 +227,7 @@
                             </div>
                             <div class="modal-body">
                                 <form id="approve_form">
-                                <div class="form-group">
+                                <div class="form-group case_radio_hook">
                                     <label>请选择受理方式：</label>
                                     <label class="radio-inline">
                                         <input type="radio" name="approve-type" value="new">创建新的案件
@@ -263,10 +263,10 @@
                                     <div class="input-group">
                                         <input autocomplete="off" data-provide="typeahead" type="text" id="case-lookup" class="form-control" placeholder="输入举报对象检索案件...">
                                          <span class="input-group-btn">
-                                            <button class="btn btn-default" id="btn-lookup-all" type="button">v</button>
+                                            <button class="btn btn-default" id="btn-lookup-all" type="button"><i class="fa fa-list"></i></button>
                                         </span>
                                     </div>
-                                    <div class="case_wrapper">
+                                    <div class="case_wrapper collapse">
                                         <label>地址：</label>
                                         <div>深圳市南山区科技园南区R2</div>
                                         <label>受理说明：</label>
@@ -274,6 +274,33 @@
                                         <label>受理时间：</label>
                                         <div>2018-06-17</div>
                                     </div>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary">确定</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <!-- Modal Dismiss-->
+                <div class="modal fade" id="dismissModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">审核不通过</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="dismiss_form">
+                                <div class="form-group">
+                                    <label>不受理说明：</label>
+                                    <textarea class="form-control" rows="3" placeholder="填写审核不通过理由"></textarea>
                                 </div>
                                 </form>
                             </div>
@@ -313,6 +340,7 @@
     <!-- render table -->
     <script>
         $(document).ready(function() {
+            //------------------------------------------待审批列表功能区域------------------------------------------------------------------------------------
             // 渲染待审核列表内容
             var checkTable = renderTable();
             /**
@@ -349,6 +377,7 @@
                     if ( type === 'row' ) {
                         //var data = table.rows( indexes ).data().pluck( 'id' );
                         $('#toolbar-check .btn').removeClass('disabled');
+                        $('#toolbar-check .btn').removeAttr('disabled');
                     }
                 });
                 //取消行选择事件
@@ -357,12 +386,17 @@
                         //var data = table.rows( indexes ).data().pluck( 'id' );
                         if(table.rows('.selected').data().length===0){
                             $('#toolbar-check .btn').addClass('disabled');
+                            $('#toolbar-check .btn').prop('disabled',true);
                         }
                     }
                 });
                 //返回table对象
                 return table;
             }
+            //----------------------------------------------END---------------------------------------------------------------------------
+
+            
+            //------------------------------------------详情显示|隐藏功能区域-----------------------------------------------------
             // 关闭详情
             $('span.detail-close-hook').on('click',function(){
                 closeDetail();
@@ -387,9 +421,9 @@
                     if(data.code==0){
                         // 生成审核按钮
                         content += '<div class="btn-group info-detail-bottom button-right" role="group">'+
-                                '<button type="button" class="btn btn-primary btn-approve-hook"><i class="fa fa-check fa-fw"></i> 审核通过</button>'+
-                                '<button type="button" class="btn btn-primary btn-merge-hook"><i class="fa fa-folder fa-fw"></i> 并案处理</button>'+
-                                '<button type="button" class="btn btn-danger btn-dismiss-hook"><i class="fa fa-times fa-fw"></i> 审核不通过</button>'+
+                                '<button type="button" class="btn btn-primary btn-approve-hook" data-toggle="modal" data-target="#approveModal"><i class="fa fa-check fa-fw"></i> 审核通过</button>'+
+                                '<button type="button" class="btn btn-primary btn-merge-hook" data-toggle="modal" data-target="#approveModal"><i class="fa fa-folder fa-fw"></i> 并案处理</button>'+
+                                '<button type="button" class="btn btn-danger btn-dismiss-hook" data-toggle="modal" data-target="#dismissModal"><i class="fa fa-times fa-fw"></i> 审核不通过</button>'+
                             '</div>';
                         
                         $('#info-detail div.panel-body').html(content);
@@ -400,13 +434,22 @@
                     }
                 });
             }
-            /**
-            * 通过按钮事件
-            */
-            $('body').on('click','button.btn-approve-hook',function(){
-                if($(this).hasClass('disabled')){return;}
-                //alert('approve');
-                $('#approveModal').modal();
+            //------------------------------------------------------END-----------------------------------------------------------------------------
+
+            //--------------------------------------------------同意|并案模态对话框功能区域----------------------------------------------------------------------------
+            //模态框显示事件回调，区分同意按钮点击还是并案按钮点击
+            $('#approveModal').on('show.bs.modal',function(e){
+                var btn = $(e.relatedTarget);
+                //console.log(e);
+                if(btn.hasClass('btn-merge-hook')){//由并案按钮触发
+                    $('div.case_radio_hook').addClass('collapse');
+                    $('#exist_case_wrapper').removeClass('collapse');
+                    $('#new_case_wrapper').addClass('collapse');
+                }else{
+                    $('div.case_radio_hook').removeClass('collapse');
+                    $('#exist_case_wrapper').addClass('collapse');
+                    $('#new_case_wrapper').addClass('collapse');
+                }
             });
             //通过模态框隐藏事件回调
             $('#approveModal').on('hidden.bs.modal', function (e) {
@@ -414,20 +457,7 @@
                 $('#exist_case_wrapper').addClass('collapse');
                 $('#new_case_wrapper').addClass('collapse');
             })
-             /**
-            * 并案按钮事件
-            */
-            $('body').on('click','button.btn-merge-hook',function(){
-                if($(this).hasClass('disabled')){return;}
-                alert('merge');
-            });
-             /**
-            * 不通过按钮事件
-            */
-            $('body').on('click','button.btn-dismiss-hook',function(){
-                if($(this).hasClass('disabled')){return;}
-                alert('dismiss');
-            });
+
             //新建案件|并入案件单选按钮事件
             $('input[type="radio"][name="approve-type"]').on('click',function(){
                 var typeVal = $(this).val();
@@ -462,13 +492,14 @@
                 itemSelected: function (item, val, text) {
                    // $("#case-lookup").attr("tag", val);
                     //$("#case-lookup").val(text);
+                    $('div.case_wrapper').removeClass('collapse');
                 },
                 matcher: function (obj) {
                     //var item = JSON.parse(obj);
                     return true;
                 }
             });
-            //下来菜单模仿按钮实现自动弹出
+            //下拉按钮点击模仿实现自动弹出
             $('#btn-lookup-all').on('click',function(){
                 $("#case-lookup").focus();
                 $("#case-lookup").val('');
@@ -476,63 +507,8 @@
                 $("#case-lookup").val(' ');
                 $("#case-lookup").trigger('keyup');
             });
+            //-----------------------------------------------END-----------------------------------------------------------------------------------------
         });
-
-        /**
-        *  确认流转功能
-        **/
-        function confirmInfo(flag,approve){
-            var title = '', bodyContent = '' ;
-            if (flag===undefined) return;
-            if(approve===false){
-                title = "审核不通过";
-                bodyContent = '<div class="form-group form-hock" action="refuse">'+
-                                    '<label>审核说明</label>'+
-                                    '<textarea class="form-control" rows="5"></textarea>'+
-                                '</div>';
-            }else if(flag===0){
-                title = "审核通过";
-                bodyContent = '<div class="form-group form-hock" action="review">'+
-                                    '<label>审核说明</label>'+
-                                    '<textarea class="form-control" rows="5"></textarea>'+
-                                '</div>';
-            }else if(flag===1){
-                title = "确认流转信息";
-                bodyContent = '<div class="form-group form-hock" action="confirm">'+
-                                    '<label>流转接口人</label>'+
-                                    '<input class="form-control">'+
-                                    '<label>流转意见及说明</label>'+
-                                    '<textarea class="form-control" rows="5"></textarea>'+
-                                '</div>';
-            }
-            
-            $("#infoModal h4.modal-title").html(title);
-            $("#infoModal div.modal-body").html(bodyContent);
-            $("#infoModal button.btn-primary").unbind('click');
-            $("#infoModal button.btn-primary").click(doConfirm);
-            $("#infoModal").modal();
-        }
-
-        /**
-        * 提交审核或确认信息
-        */
-        function doConfirm () {
-            var el = $('div.form-group.form-hock');
-            if(!el) return;
-            var action = el.attr("action");
-            //do some database update
-            alert('action:'+action);
-            // 关闭模态对话框
-            $("#infoModal").modal('hide');
-            // 关闭详细信息页面
-            closeDetail();
-            if(action==="review") {
-                reviewTable.ajax.reload();
-            }else if(action==="confirm") {
-                confirmTable.ajax.reload();
-            }
-            
-        }
     </script>
 </body>
 </html>
